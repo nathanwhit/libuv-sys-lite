@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "@david/path": "jsr:@david/path@^0.2.0",
-    "@std/path": "jsr:@std/path@^1.0.6"
-  }
-}
