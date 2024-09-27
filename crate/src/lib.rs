@@ -48,8 +48,8 @@ macro_rules! generate {
             match symbol {
               Ok(f) => *f,
               Err(e) => {
-                #[cfg(debug_assertions)] {
-                  eprintln!("Load Node-API [{}] from host runtime failed: {}", stringify!($name), e);
+                #[cfg(feature = "warn-missing")] {
+                  eprintln!("Load libuv [{}] from host failed: {}", stringify!($name), e);
                 }
                 LIBUV.$name
               }
