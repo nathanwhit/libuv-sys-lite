@@ -1,0 +1,5 @@
+LIBRARY
+EXPORTS
+  uv_default_loop
+  uv_close
+  uv_idle_init

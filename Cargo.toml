@@ -1,20 +1,8 @@
-[package]
-name = "libuv-sys-lite"
-version = "1.48.0"
-edition = "2021"
-license-file = "LICENSE"
-repository = "https://github.com/nathanwhit/libuv-sys-lite"
-description = "Tiny, raw bindings to libuv without linking to it"
+[workspace]
+members = ["./crate", "tests/*"]
+resolver = "2"
 
-[dependencies]
-libloading = { version = "0.8.5", optional = true }
 
-[build-dependencies]
-bindgen = "0.70.1"
-
-[features]
-default = []
-dyn-symbols = ["dep:libloading"]
-
-[target.'cfg(target_env = "msvc")'.dependencies]
+[workspace.dependencies]
+libuv-sys-lite = { path = "./crate/" }
 libloading = "0.8.5"

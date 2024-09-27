@@ -105,3 +105,14 @@ pub unsafe fn setup() -> libloading::Library {
     Ok(l) => l,
   }
 }
+/// Loads libuv symbols from host process.
+/// Must be called at least once before using any functions in bindings or
+/// they will panic.
+#[cfg(any(target_env = "msvc", feature = "dyn-symbols"))]
+#[allow(clippy::missing_safety_doc)]
+pub unsafe fn setup_no_warn() -> libloading::Library {
+  match load_all() {
+    Err(err) => panic!("{}", err),
+    Ok(l) => l,
+  }
+}
