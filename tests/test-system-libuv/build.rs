@@ -1,5 +1,5 @@
 fn main() {
-  if std::env::var("RUN_TEST").is_ok() {
+  if std::env::var("CI").is_err() {
     system_deps::Config::new().probe().unwrap();
   }
 }

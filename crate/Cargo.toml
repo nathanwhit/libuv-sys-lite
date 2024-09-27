@@ -17,6 +17,7 @@ bindgen = "0.70.1"
 [features]
 default = []
 dyn-symbols = ["dep:libloading"]
+warn-missing = []
 
 [target.'cfg(target_env = "msvc")'.dependencies]
 libloading.workspace = true
