@@ -23,8 +23,10 @@ jobs:
           git clone https://github.com/microsoft/vcpkg.git
           cd vcpkg
           ./bootstrap-vcpkg.sh # for bash
+          echo '{"dependencies": ["libuv"],"overrides":[{"name": "libuv","version": "1.46.0"}],"builtin-baseline": "76d153790caf0592fce8fc4484aa6db18c7d00d4"}' >> ./vcpkg.json
           ./vcpkg install libuv
           arch=$(echo "$RUNNER_ARCH" | tr '[:upper:]' '[:lower:]')
+          echo "arch is $arch"
           case "$RUNNER_OS" in
             macOS)
               os=osx;;
@@ -33,17 +35,12 @@ jobs:
             Windows)
               os=windows;;
           esac
-          echo "PKGCONFIG_PATH=$(pwd)/installed/$arch-$os/lib/pkgconfig" >> $GITHUB_OUTPUT
+          echo "os is $os"
+          PKG_CONFIG_PATH="$(pwd)/installed/$arch-$os/lib/pkgconfig"
+          echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH is $PKG_CONFIG_PATH"
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
-        env:
-          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
       - run: cargo fmt --check
-        env:
-          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
       - run: cargo clippy
-        env:
-          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
       - run: cargo test --all-features
-        env:
-          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
