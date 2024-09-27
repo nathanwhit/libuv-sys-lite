@@ -157,13 +157,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "libuv-dylib"
-version = "0.1.0"
-dependencies = [
- "libuv-sys-lite",
-]
-
-[[package]]
 name = "libuv-sys-lite"
 version = "1.48.0"
 dependencies = [
