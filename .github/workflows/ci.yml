@@ -18,13 +18,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup libuv
+        id: libuv
         run: |
-          git clone https://github.com/microsoft/vcpkg.git
+          it clone https://github.com/microsoft/vcpkg.git
           cd vcpkg
           ./bootstrap-vcpkg.sh # for bash
           ./vcpkg install libuv
+          arch=$(echo "$RUNNER_ARCH" | tr '[:upper:]' '[:lower:]')
+          case "$RUNNER_OS" in
+            macOS)
+              os=osx;;
+            Linux)
+              os=linux;;
+            Windows)
+              os=windows;;
+          esac
+          echo "PKGCONFIG_PATH=$(pwd)/installed/$arch-$os/lib/pkgconfig" >> $GITHUB_OUTPUT
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
+        env:
+          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
       - run: cargo fmt --check
+        env:
+          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
       - run: cargo clippy
+        env:
+          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
       - run: cargo test --all-features
+        env:
+          PKG_CONFIG_PATH: ${{ steps.libuv.PKGCONFIG_PATH }}
