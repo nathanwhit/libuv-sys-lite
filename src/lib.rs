@@ -93,16 +93,15 @@ mod types {
 //
 pub use functions::*;
 pub use types::*;
-//
-// /// Loads N-API symbols from host process.
-// /// Must be called at least once before using any functions in bindings or
-// /// they will panic.
-// /// Safety: `env` must be a valid `napi_env` for the current thread
-// #[cfg(any(target_env = "msvc", feature = "dyn-symbols"))]
-// #[allow(clippy::missing_safety_doc)]
-// pub unsafe fn setup() -> libloading::Library {
-//     match load_all() {
-//         Err(err) => panic!("{}", err),
-//         Ok(l) => l,
-//     }
-// }
+
+/// Loads libuv symbols from host process.
+/// Must be called at least once before using any functions in bindings or
+/// they will panic.
+#[cfg(any(target_env = "msvc", feature = "dyn-symbols"))]
+#[allow(clippy::missing_safety_doc)]
+pub unsafe fn setup() -> libloading::Library {
+  match load_all() {
+    Err(err) => panic!("{}", err),
+    Ok(l) => l,
+  }
+}

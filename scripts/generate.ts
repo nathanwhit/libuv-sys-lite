@@ -34,6 +34,19 @@ async function generateFunctions() {
     extern "C" {
       pub fn uv_loop_configure(loop_: *mut uv_loop_t, option: uv_loop_option, ...);
     }
+
+    #[cfg(any(target_env = "msvc", feature = "dyn-symbols"))]
+    pub(super) unsafe fn load_all() -> Result<libloading::Library, libloading::Error> {
+      #[cfg(all(windows))]
+      let host = libloading::os::windows::Library::this()?.into();
+
+      #[cfg(unix)]
+      let host = libloading::os::unix::Library::this().into();
+
+      load(&host)?;
+
+      Ok(host)
+    }
   `;
 
   await Deno.writeTextFile("./src/functions.rs", generated);
