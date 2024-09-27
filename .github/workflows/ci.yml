@@ -24,7 +24,7 @@ jobs:
           cd vcpkg
           ./bootstrap-vcpkg.sh # for bash
           echo '{"dependencies": ["libuv"],"overrides":[{"name": "libuv","version": "1.46.0"}],"builtin-baseline": "76d153790caf0592fce8fc4484aa6db18c7d00d4"}' >> ./vcpkg.json
-          ./vcpkg install libuv
+          ./vcpkg install
           arch=$(echo "$RUNNER_ARCH" | tr '[:upper:]' '[:lower:]')
           echo "arch is $arch"
           case "$RUNNER_OS" in
