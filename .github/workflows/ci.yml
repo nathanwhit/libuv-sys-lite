@@ -1,6 +1,10 @@
 name: ci
 on: [push, pull_request]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     strategy:
@@ -13,6 +17,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - name: Setup libuv
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git
+          ./bootstrap-vcpkg.sh # for bash
+          ./vcpkg install libuv
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
       - run: cargo fmt --check
