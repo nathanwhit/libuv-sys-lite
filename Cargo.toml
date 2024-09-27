@@ -1,6 +1,7 @@
 [workspace]
-members = ["./crate", "tests/test*"]
+members = ["./crate", "tests/*"]
 resolver = "2"
+exclude = ["tests/libuv-dylib"]
 
 
 [workspace.dependencies]

@@ -1,9 +1,12 @@
+#![allow(unused_imports)]
 #![allow(clippy::missing_safety_doc)]
 use std::{
   mem::MaybeUninit,
+  path::PathBuf,
   sync::atomic::{AtomicBool, Ordering::SeqCst},
 };
 
+use libloading::library_filename;
 use libuv_sys_lite::{uv_handle_t, uv_idle_t, uv_loop_t};
 
 struct Called {
@@ -40,18 +43,13 @@ fn idle_example() {
     "{:?}",
     std::process::Command::new("cargo")
       .arg("build")
-      .arg("-p")
-      .arg("libuv-dylib")
+      .arg("--manifest-path")
+      .arg("../libuv-dylib/Cargo.toml")
       .output()
       .unwrap()
   );
-  // escargot::CargoBuild::new()
-  //   .manifest_path("../../test-host-libuv/Cargo.toml")
-  //   .package("test-host-libuv")
-  //   .exec()
-  //   .unwrap();
-  let lo =
-    unsafe { libloading::Library::new(libloading::library_filename("libuv_dylib")).unwrap() };
+  let path = PathBuf::from("../libuv-dylib/target/debug").join(library_filename("libuv_dylib"));
+  let lo = unsafe { libloading::Library::new(path).unwrap() };
   let doit = unsafe { lo.get::<unsafe extern "C" fn()>(c"doit".to_bytes_with_nul()) };
 
   let doit = doit.unwrap();
