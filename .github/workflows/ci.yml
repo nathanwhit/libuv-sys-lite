@@ -23,7 +23,7 @@ jobs:
           git clone https://github.com/microsoft/vcpkg.git
           cd vcpkg
           ./bootstrap-vcpkg.sh # for bash
-          echo '{"dependencies": ["libuv"],"overrides":[{"name": "libuv","version": "1.46.0"}],"builtin-baseline": "76d153790caf0592fce8fc4484aa6db18c7d00d4"}' >> ./vcpkg.json
+          echo '{"dependencies": ["libuv"],"overrides":[{"name": "libuv","version": "1.48.0"}],"builtin-baseline": "76d153790caf0592fce8fc4484aa6db18c7d00d4"}' >> ./vcpkg.json
           ./vcpkg install
           arch=$(echo "$RUNNER_ARCH" | tr '[:upper:]' '[:lower:]')
           echo "arch is $arch"
@@ -38,6 +38,7 @@ jobs:
           echo "os is $os"
           PKG_CONFIG_PATH="$(pwd)/vcpkg_installed/$arch-$os/lib/pkgconfig"
           ls -la "$PKG_CONFIG_PATH"
+          cp "$PKG_CONFIG_PATH/libuv-static.pc" "$PKG_CONFIG_PATH/libuv.pc"
           echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "PKG_CONFIG_PATH is $PKG_CONFIG_PATH"
       - uses: dtolnay/rust-toolchain@stable
