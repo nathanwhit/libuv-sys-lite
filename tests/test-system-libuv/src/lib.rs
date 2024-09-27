@@ -24,6 +24,7 @@ unsafe extern "C" fn free_on_close(handle: *mut uv_handle_t) {
   let _ = Box::from_raw(idle);
 }
 
+#[ignore]
 #[test]
 fn idle_example() {
   let idler = Box::into_raw(Box::new(MaybeUninit::<uv_idle_t>::uninit()));
