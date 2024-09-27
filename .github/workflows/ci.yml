@@ -20,7 +20,7 @@ jobs:
       - name: Setup libuv
         id: libuv
         run: |
-          it clone https://github.com/microsoft/vcpkg.git
+          git clone https://github.com/microsoft/vcpkg.git
           cd vcpkg
           ./bootstrap-vcpkg.sh # for bash
           ./vcpkg install libuv
