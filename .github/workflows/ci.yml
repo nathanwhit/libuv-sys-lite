@@ -36,7 +36,7 @@ jobs:
               os=windows;;
           esac
           echo "os is $os"
-          PKG_CONFIG_PATH="$(pwd)/installed/$arch-$os/lib/pkgconfig"
+          PKG_CONFIG_PATH="$(pwd)/vcpkg_installed/$arch-$os/lib/pkgconfig"
           ls -la "$PKG_CONFIG_PATH"
           echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "PKG_CONFIG_PATH is $PKG_CONFIG_PATH"
