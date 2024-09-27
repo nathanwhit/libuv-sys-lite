@@ -1,6 +1,6 @@
 [package]
 name = "libuv-sys-lite"
-version = "1.48.0"
+version = "1.48.1"
 edition = "2021"
 license-file = "LICENSE"
 repository = "https://github.com/nathanwhit/libuv-sys-lite"
