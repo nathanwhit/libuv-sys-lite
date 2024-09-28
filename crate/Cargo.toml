@@ -1,10 +1,11 @@
 [package]
 name = "libuv-sys-lite"
-version = "1.48.1"
+version = "1.48.2"
 edition = "2021"
 license-file = "../LICENSE"
 repository = "https://github.com/nathanwhit/libuv-sys-lite"
 description = "Tiny, raw bindings to libuv without linking to it"
+readme = "../README.md"
 
 build = "./build.rs"
 

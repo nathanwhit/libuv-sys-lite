@@ -140,7 +140,7 @@ dependencies = [
 
 [[package]]
 name = "libuv-sys-lite"
-version = "1.48.1"
+version = "1.48.2"
 dependencies = [
  "bindgen",
  "libloading",
