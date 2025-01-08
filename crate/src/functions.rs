@@ -942,7 +942,7 @@ extern "C" {
   pub fn uv_loop_configure(loop_: *mut uv_loop_t, option: uv_loop_option, ...);
 }
 
- #[cfg(feature = "dyn-symbols")]
+#[cfg(feature = "dyn-symbols")]
 pub(super) unsafe fn load_all() -> Result<libloading::Library, libloading::Error> {
   #[cfg(windows)]
   let host = libloading::os::windows::Library::this()?.into();
