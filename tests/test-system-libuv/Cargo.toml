@@ -5,7 +5,7 @@ edition = "2021"
 private = true
 
 [dependencies]
-libuv-sys-lite.workspace = true
+libuv-sys-lite = { workspace = true, features = ["dyn-symbols"] }
 
 [build-dependencies]
 system-deps = "7.0.3"

@@ -47,6 +47,7 @@ macro_rules! generate {
             let symbol: Result<libloading::Symbol<unsafe extern "C" fn ($(_: $ptype,)*)$( -> $rtype)*>, libloading::Error> = host.get(stringify!($name).as_bytes());
             match symbol {
               Ok(f) => *f,
+              #[cfg_attr(not(feature = "warn-missing"), allow(unused_variables))]
               Err(e) => {
                 #[cfg(feature = "warn-missing")] {
                   eprintln!("Load libuv [{}] from host failed: {}", stringify!($name), e);
