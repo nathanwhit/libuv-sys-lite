@@ -25,11 +25,11 @@ jobs:
         run: |
           Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
           Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-        shell: pwsh
-      - if: runner.os == 'Windows'
-        run: |
           scoop bucket add extras
           scoop install extras/pkg-config-lite
+        shell: pwsh
+      # - if: runner.os == 'Windows'
+      #   run: |
       - name: Setup libuv
         id: libuv
         run: |
