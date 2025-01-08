@@ -26,6 +26,11 @@ jobs:
           mkdir -p build
           (cd build && cmake -DCMAKE_BUILD_TYPE=Release ..)
           cmake --build build
+          if [ $RUNNER_OS = "Windows" ]; then
+            cmake --install build
+          else
+            sudo cmake --install build
+          fi
           cmake --install build
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
