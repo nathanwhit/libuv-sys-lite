@@ -28,18 +28,19 @@ jobs:
           tar -xzvf libuv-v1.48.0.tar.gz
           cd libuv-v1.48.0
           mkdir -p build
-          (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF ..)
           if [ $RUNNER_OS = "Windows" ]; then
+            (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF -A x64 ..)
             cmake --build build --config Release
           else
+            (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF ..)
             cmake --build build
           fi
           cat build/cmake_install.cmake
           ls -la build
           if [ $RUNNER_OS = "Windows" ]; then
             cmake --install build
-            echo "LIBUV_LIB_PATH=C:\Program Files (x86)\libuv\lib" >> $GITHUB_ENV
-            echo "LIBUV_INCLUDE_PATH=C:\Program Files (x86)\libuv\include" >> $GITHUB_ENV
+            echo "LIBUV_LIB_PATH=C:\Program Files\libuv\lib" >> $GITHUB_ENV
+            echo "LIBUV_INCLUDE_PATH=C:\Program Files\libuv\include" >> $GITHUB_ENV
             echo "C:\Program Files\libuv\bin" >> $GITHUB_PATH
           else
             sudo cmake --install build
