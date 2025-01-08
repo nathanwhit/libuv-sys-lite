@@ -1,0 +1,55 @@
+name: bindgen
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  bindgen:
+    strategy:
+      matrix:
+        include:
+          - os: linux
+            arch: x86_64
+            runner: ubuntu-24.04
+          - os: windows
+            arch: x86_64
+            runner: windows-2022
+          - os: macos
+            arch: x86_64
+            runner: macos-13
+          - os: macos
+            arch: aarch64
+            runner: macos-14
+    name: build bindings
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup libuv
+        id: libuv
+        run: |
+          curl -O https://dist.libuv.org/dist/v1.48.0/libuv-v1.48.0.tar.gz
+          tar -xzvf libuv-v1.48.0.tar.gz
+          cd libuv-v1.48.0
+          mkdir -p build
+          if [ $RUNNER_OS = "Windows" ]; then
+            (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF -A x64 ..)
+            cmake --build build --config Release
+            cmake --install build
+            echo "LIBUV_LIB_PATH=C:\Program Files\libuv\lib" >> $GITHUB_ENV
+            echo "LIBUV_INCLUDE_PATH=C:\Program Files\libuv\include" >> $GITHUB_ENV
+            echo "C:\Program Files\libuv\bin" >> $GITHUB_PATH
+          else
+            (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF ..)
+            cmake --build build
+            sudo cmake --install build
+          fi
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo b -r
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bindings-${{ matrix.os }}-${{ matrix.arch }}
+          path: target/release/build/*/out/bindings.rs
+          if-no-files-found: error
