@@ -30,6 +30,9 @@ jobs:
           mkdir -p build
           (cd build && cmake -DCMAKE_BUILD_TYPE=Release ..)
           cmake --build build
+          cat build/cmake_install.cmake
+
+          ls -la build
           if [ $RUNNER_OS = "Windows" ]; then
             cmake --install build
           else
