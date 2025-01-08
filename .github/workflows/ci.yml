@@ -21,6 +21,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - if: runner.os == 'windows-latest'
+        run: |
+          scoop bucket add extras
+          scoop install extras/pkg-config-lite
       - name: Setup libuv
         id: libuv
         run: |
@@ -41,10 +45,6 @@ jobs:
           else
             sudo cmake --install build
           fi
-      - if: runner.os == 'windows-latest'
-        run: |
-          scoop bucket add extras
-          scoop install extras/pkg-config-lite
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
       - run: cargo fmt --check
