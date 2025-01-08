@@ -26,7 +26,7 @@ unsafe extern "C" fn free_on_close(handle: *mut uv_handle_t) {
 
 #[test]
 fn idle_example() {
-  #[cfg(windows)]
+  #[cfg(target_os = "windows")]
   unsafe {
     libuv_sys_lite::setup()
   };
