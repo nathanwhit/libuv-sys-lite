@@ -38,7 +38,7 @@ jobs:
           ls -la build
           if [ $RUNNER_OS = "Windows" ]; then
             cmake --install build
-            echo "LIBUV_LIB_PATH=C:\Program Files (x86)\libuv\lib" >> $GITHUB_ENV
+            echo "LIBUV_LIB_PATH=C:\Program Files (x86)\libuv\lib;C:\Program Files (x86)\libuv\bin" >> $GITHUB_ENV
             echo "LIBUV_INCLUDE_PATH=C:\Program Files (x86)\libuv\include" >> $GITHUB_ENV
           else
             sudo cmake --install build
