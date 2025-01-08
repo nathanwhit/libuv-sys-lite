@@ -5,7 +5,7 @@
 
 // borrowed from https://github.com/neon-bindings/neon/tree/main/crates/neon/src/sys/bindings
 
-#[cfg(any(target_env = "msvc", feature = "dyn-symbols"))]
+#[cfg(feature = "dyn-symbols")]
 macro_rules! generate {
   (extern "C" {
     $(fn $name:ident($($param:ident: $ptype:ty$(,)?)*)$( -> $rtype:ty)?;)+
@@ -72,7 +72,7 @@ macro_rules! generate {
   };
 }
 
-#[cfg(not(any(target_env = "msvc", feature = "dyn-symbols")))]
+#[cfg(not(feature = "dyn-symbols"))]
 macro_rules! generate {
   (extern "C" {
     $(fn $name:ident($($param:ident: $ptype:ty$(,)?)*)$( -> $rtype:ty)?;)+
@@ -98,7 +98,7 @@ pub use types::*;
 /// Loads libuv symbols from host process.
 /// Must be called at least once before using any functions in bindings or
 /// they will panic.
-#[cfg(any(target_env = "msvc", feature = "dyn-symbols"))]
+#[cfg(feature = "dyn-symbols")]
 #[allow(clippy::missing_safety_doc)]
 pub unsafe fn setup() -> libloading::Library {
   match load_all() {
