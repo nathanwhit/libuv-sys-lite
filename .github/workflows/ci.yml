@@ -29,7 +29,11 @@ jobs:
           cd libuv-v1.48.0
           mkdir -p build
           (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF ..)
-          cmake --build build
+          if [ $RUNNER_OS = "Windows" ]; then
+            cmake --build build --config Release
+          else
+            cmake --build build
+          fi
           cat build/cmake_install.cmake
           ls -la build
           if [ $RUNNER_OS = "Windows" ]; then
