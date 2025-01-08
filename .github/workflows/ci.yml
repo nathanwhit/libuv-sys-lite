@@ -23,6 +23,11 @@ jobs:
       - uses: actions/checkout@v4
       - if: runner.os == 'Windows'
         run: |
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+          Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+        shell: pwsh
+      - if: runner.os == 'Windows'
+        run: |
           scoop bucket add extras
           scoop install extras/pkg-config-lite
       - name: Setup libuv
