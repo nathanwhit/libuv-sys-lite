@@ -41,6 +41,10 @@ jobs:
           else
             sudo cmake --install build
           fi
+      - if: runner.os == 'windows-latest'
+        run: |
+          scoop bucket add extras
+          scoop install extras/pkg-config-lite
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
       - run: cargo fmt --check
