@@ -33,6 +33,7 @@ jobs:
           cat build/cmake_install.cmake
 
           ls -la build
+          ls -la build/Release
           if [ $RUNNER_OS = "Windows" ]; then
             cmake --install build
           else
