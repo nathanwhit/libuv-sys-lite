@@ -54,4 +54,10 @@ jobs:
       - run: cargo check
       - run: cargo fmt --check
       - run: cargo clippy
-      - run: cargo test
+      - if: runner.os != 'Windows'
+        run: cargo test
+      - if: runner.os == 'Windows'
+        run: cargo test
+        env:
+          LIBUV_LIB_PATH: "C:/Program Files (x86)/libuv/lib"
+          LIBUV_INCLUDE_PATH: "C:/Program Files (x86)/libuv/include"
