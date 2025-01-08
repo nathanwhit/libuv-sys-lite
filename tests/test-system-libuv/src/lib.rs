@@ -26,7 +26,10 @@ unsafe extern "C" fn free_on_close(handle: *mut uv_handle_t) {
 
 #[test]
 fn idle_example() {
-  unsafe { libuv_sys_lite::setup() };
+  #[cfg(windows)]
+  unsafe {
+    libuv_sys_lite::setup()
+  };
   let idler = Box::into_raw(Box::new(MaybeUninit::<uv_idle_t>::uninit()));
 
   unsafe {
