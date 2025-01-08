@@ -1,5 +1,5 @@
 fn main() {
-  if cfg!(target_os = "windows") {
+  if std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default() == "windows" {
     if let Ok(link_path) = std::env::var("LIBUV_LIB_PATH") {
       println!("cargo:rustc-link-search=native={}", link_path);
       println!("cargo:rustc-link-lib=uv");
