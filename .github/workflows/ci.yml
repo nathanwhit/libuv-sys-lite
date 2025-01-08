@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - if: runner.os == 'windows-latest'
+      - if: runner.os == 'Windows'
         run: |
           scoop bucket add extras
           scoop install extras/pkg-config-lite
