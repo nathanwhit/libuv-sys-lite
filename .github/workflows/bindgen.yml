@@ -1,4 +1,4 @@
-name: ci
+name: bindgen
 on:
   pull_request:
   workflow_dispatch:
@@ -8,7 +8,7 @@ defaults:
     shell: bash
 
 jobs:
-  test:
+  bindgen:
     strategy:
       matrix:
         include:
@@ -24,7 +24,7 @@ jobs:
           - os: macos
             arch: aarch64
             runner: macos-14
-    name: cargo test
+    name: build bindings
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
