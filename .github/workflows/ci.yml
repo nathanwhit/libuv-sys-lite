@@ -26,7 +26,7 @@ jobs:
           mkdir -p build
           (cd build && cmake -DCMAKE_BUILD_TYPE=Release ..)
           cmake --build build
-          sudo cmake --install build
+          cmake --install build
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
       - run: cargo fmt --check
