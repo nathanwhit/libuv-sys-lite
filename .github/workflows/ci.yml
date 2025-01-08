@@ -31,7 +31,6 @@ jobs:
           else
             sudo cmake --install build
           fi
-          cmake --install build
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo check
       - run: cargo fmt --check
