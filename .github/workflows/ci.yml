@@ -28,13 +28,10 @@ jobs:
           tar -xzvf libuv-v1.48.0.tar.gz
           cd libuv-v1.48.0
           mkdir -p build
-          (cd build && cmake -DCMAKE_BUILD_TYPE=Release ..)
+          (cd build && cmake -DCMAKE_BUILD_TYPE=Release -DLIBUV_BUILD_TESTS=OFF ..)
           cmake --build build
           cat build/cmake_install.cmake
           ls -la build
-          if [ -d build/Release ]; then
-            ls -la build/Release
-          fi
           if [ $RUNNER_OS = "Windows" ]; then
             cmake --install build
           else
