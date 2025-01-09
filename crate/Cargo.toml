@@ -27,3 +27,4 @@ bindgen = "0.70.1"
 default = []
 dyn-symbols = ["dep:libloading"]
 warn-missing = []
+bindgen = []
